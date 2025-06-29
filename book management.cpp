@@ -1,138 +1,123 @@
 #include <iostream>
-#include <fstream>
-#include <vector>
 using namespace std;
 
-class Book {
-public:
-    int bookID;
-    string title;
-    string author;
+// ------------------ Book Structure ------------------
+struct Book {
+    int id;
+    char title[50];
+    char author[50];
     bool isIssued;
-
-    Book() {
-        bookID = 0;
-        title = "";
-        author = "";
-        isIssued = false;
-    }
-
-    void inputBook() {
-        cout << "Enter Book ID: ";
-        cin >> bookID;
-        cin.ignore();
-        cout << "Enter Title: ";
-        getline(cin, title);
-        cout << "Enter Author: ";
-        getline(cin, author);
-        isIssued = false;
-    }
-
-    void displayBook() const {
-        cout << bookID << " | " << title << " | " << author 
-             << " | " << (isIssued ? "Issued" : "Available") << endl;
-    }
-
-    void modifyBook() {
-        cout << "Editing Book ID: " << bookID << endl;
-        cout << "Enter new Title: ";
-        cin.ignore();
-        getline(cin, title);
-        cout << "Enter new Author: ";
-        getline(cin, author);
-    }
 };
 
-// File handling helpers
-void saveBooksToFile(const vector<Book>& books) {
-    ofstream file("books.txt");
-    for (const Book& b : books) {
-        file << b.bookID << "|" << b.title << "|" << b.author << "|" << b.isIssued << "\n";
+// ------------------ Global Book Array ------------------
+const int MAX_BOOKS = 100;
+Book books[MAX_BOOKS];
+int bookCount = 0;
+
+// ------------------ Functions ------------------
+
+void addBook() {
+    if (bookCount >= MAX_BOOKS) {
+        cout << "Library is full!\n";
+        return;
     }
-    file.close();
+
+    cout << "Enter Book ID: ";
+    cin >> books[bookCount].id;
+    cin.ignore();
+    cout << "Enter Book Title: ";
+    cin.getline(books[bookCount].title, 50);
+    cout << "Enter Author Name: ";
+    cin.getline(books[bookCount].author, 50);
+    books[bookCount].isIssued = false;
+
+    bookCount++;
+    cout << "✅ Book added successfully!\n";
 }
 
-vector<Book> loadBooksFromFile() {
-    vector<Book> books;
-    ifstream file("books.txt");
-    Book b;
-    while (file >> b.bookID) {
-        file.ignore(); // skip '|'
-        getline(file, b.title, '|');
-        getline(file, b.author, '|');
-        file >> b.isIssued;
-        file.ignore(); // skip newline
-        books.push_back(b);
+void viewBooks() {
+    if (bookCount == 0) {
+        cout << "No books available.\n";
+        return;
     }
-    file.close();
-    return books;
+
+    cout << "\n--- Book List ---\n";
+    for (int i = 0; i < bookCount; i++) {
+        cout << books[i].id << " | " << books[i].title << " | " << books[i].author;
+        cout << " | " << (books[i].isIssued ? "Issued" : "Available") << "\n";
+    }
 }
 
-// Menu system for managing books
+void modifyBook() {
+    int id;
+    cout << "Enter Book ID to modify: ";
+    cin >> id;
+    cin.ignore();
+
+    bool found = false;
+    for (int i = 0; i < bookCount; i++) {
+        if (books[i].id == id) {
+            cout << "Enter new title: ";
+            cin.getline(books[i].title, 50);
+            cout << "Enter new author: ";
+            cin.getline(books[i].author, 50);
+            found = true;
+            cout << "✅ Book modified successfully!\n";
+            break;
+        }
+    }
+    if (!found) cout << "❌ Book not found.\n";
+}
+
+void deleteBook() {
+    int id;
+    cout << "Enter Book ID to delete: ";
+    cin >> id;
+
+    bool found = false;
+    for (int i = 0; i < bookCount; i++) {
+        if (books[i].id == id) {
+            for (int j = i; j < bookCount - 1; j++) {
+                books[j] = books[j + 1];
+            }
+            bookCount--;
+            found = true;
+            cout << "✅ Book deleted successfully!\n";
+            break;
+        }
+    }
+    if (!found) cout << "❌ Book not found.\n";
+}
+
+// ------------------ Menu ------------------
+
 void bookMenu() {
-    vector<Book> books = loadBooksFromFile();
     int choice;
     do {
-        cout << "\n--- Book Management Menu ---\n";
-        cout << "1. Add Book\n2. Display All Books\n3. Modify Book\n4. Delete Book\n0. Exit\n";
-        cout << "Enter your choice: ";
+        cout << "\n=== Book Management Menu ===\n";
+        cout << "1. Add Book\n";
+        cout << "2. View All Books\n";
+        cout << "3. Modify Book\n";
+        cout << "4. Delete Book\n";
+        cout << "0. Exit\n";
+        cout << "Enter choice: ";
         cin >> choice;
+        cin.ignore();
 
-        if (choice == 1) {
-            Book b;
-            b.inputBook();
-            books.push_back(b);
-            saveBooksToFile(books);
-            cout << "Book added successfully!\n";
-        } 
-        else if (choice == 2) {
-            cout << "\nBook List:\n";
-            for (const Book& b : books) {
-                b.displayBook();
-            }
-        }
-        else if (choice == 3) {
-            int id;
-            cout << "Enter Book ID to modify: ";
-            cin >> id;
-            bool found = false;
-            for (Book& b : books) {
-                if (b.bookID == id) {
-                    b.modifyBook();
-                    found = true;
-                    break;
-                }
-            }
-            if (found) {
-                saveBooksToFile(books);
-                cout << "Book updated successfully!\n";
-            } else {
-                cout << "Book not found.\n";
-            }
-        }
-        else if (choice == 4) {
-            int id;
-            cout << "Enter Book ID to delete: ";
-            cin >> id;
-            bool deleted = false;
-            for (auto it = books.begin(); it != books.end(); ++it) {
-                if (it->bookID == id) {
-                    books.erase(it);
-                    deleted = true;
-                    break;
-                }
-            }
-            if (deleted) {
-                saveBooksToFile(books);
-                cout << "Book deleted successfully.\n";
-            } else {
-                cout << "Book not found.\n";
-            }
+        switch (choice) {
+            case 1: addBook(); break;
+            case 2: viewBooks(); break;
+            case 3: modifyBook(); break;
+            case 4: deleteBook(); break;
+            case 0: cout << "Exiting...\n"; break;
+            default: cout << "❗ Invalid choice.\n";
         }
     } while (choice != 0);
 }
 
+// ------------------ Main ------------------
+
 int main() {
-    bookMenu(); // You can later call this from the main UI integration
+    bookMenu();
     return 0;
 }
