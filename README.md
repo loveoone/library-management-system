@@ -1,6 +1,6 @@
 library management system review 
 This project works library management system using c++ programming languages using statement,function,array,string.
-It 1.Add, update, delete books
+It does 1.Add, update, delete books
 2. Register and manage users (students or staff)
 3. Issue and return books
 4. Search for books (by title, author, ID)
