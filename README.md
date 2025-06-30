@@ -15,9 +15,11 @@ A library management system typically tracks:
 ### 📦 System Integration Module
 
 **👨‍💻 Author:** *Eliyas Tegegn (Elias)*
+</br>
 **📌 Role:** *System Integration*
+</br>
 **📁 File:** `main_integration.cpp`
-
+</br>
 #### 🔧 Summary
 
 This module acts as the **central integration point** for the entire Library Management System. It connects all functional parts into one unified command-line application.
