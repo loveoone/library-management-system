@@ -8,3 +8,53 @@ A library management system typically tracks:
 -Borrowed Books Report: Show currently borrowed books and their due dates.
 -Overdue Books Report: Highlight books past their due date with fines.
 -Member Report: List members and their borrowing history.
+
+
+---
+
+### 📦 System Integration Module
+
+**👨‍💻 Author:** *Eliyas Tegegn (Elias)*
+**📌 Role:** *System Integration*
+**📁 File:** `main_integration.cpp`
+
+#### 🔧 Summary
+
+This module acts as the **central integration point** for the entire Library Management System. It connects all functional parts into one unified command-line application.
+
+#### ✅ Integrated Features
+
+| Feature           | Status     | Implemented By |
+| ----------------- | ---------- | -------------- |
+| Book Management   | ✅ Complete | Afomiya        |
+| Book Return       | ✅ Complete | Nahom          |
+| Report Generation | ✅ Complete | Samuel         |
+
+#### 🚧 Pending Features (Placeholders Ready)
+
+| Feature                 | Status     | Assigned To |
+| ----------------------- | ---------- | ----------- |
+| User Management         | 🚧 Pending | Afomiya     |
+| Book Issuing            | 🚧 Pending | Biruk       |
+| File Handling & Storage | 🚧 Pending | Tewodrose   |
+| Backup & Recovery       | 🚧 Pending | Harun       |
+| Search & File System    | 🚧 Pending | Huzeyfa     |
+
+#### 🛠️ How to Run
+
+```bash
+g++ main_integration.cpp -o library_system
+./library_system
+```
+
+#### 📄 Output Files
+
+* `borrowed_books.txt` – Text format report
+* `borrowed_books.csv` – CSV format report
+
+#### 🔗 Notes
+
+* The `mainMenu()` function is the main entry point for running the entire system.
+* All modules are designed for future extension and easy replacement of stubs with actual logic.
+
+---
