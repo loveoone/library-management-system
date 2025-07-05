@@ -13,9 +13,10 @@ int bookCount = 0;
 void addBook() {
     cout << "Enter Book ID: ";
     cin >> ids[bookCount];
-    cin.ignore();
-    cout << "Enter Title: ";
-    getline(cin, titles[bookCount]);
+
+    cout << "Enter Title (no spaces): ";
+    cin >> titles[bookCount]; // reads single word (no spaces)
+
     isIssueds[bookCount] = false;
     bookCount++;
     cout << "Book added.\n";
@@ -25,13 +26,13 @@ void issueBook() {
     int id;
     cout << "Enter Book ID to issue: ";
     cin >> id;
-    cin.ignore();
+
     for (int i = 0; i < bookCount; i++) {
         if (ids[i] == id && !isIssueds[i]) {
-            cout << "Issued To: ";
-            getline(cin, issuedTos[i]);
-            cout << "Issue Date: ";
-            getline(cin, issueDates[i]);
+            cout << "Issued To (no spaces): ";
+            cin >> issuedTos[i];
+            cout << "Issue Date (no spaces): ";
+            cin >> issueDates[i];
             isIssueds[i] = true;
             cout << "Book issued.\n";
             return;
@@ -63,6 +64,7 @@ int main() {
     do {
         cout << "\n1. Add Book\n2. Issue Book\n3. View Issued Books\n0. Exit\nChoice: ";
         cin >> choice;
+
         if (choice == 1) addBook();
         else if (choice == 2) issueBook();
         else if (choice == 3) viewIssued();
