@@ -1,53 +1,54 @@
 #include <iostream>
 #include <string>
 using namespace std;
+
 const int SIZE = 100;
-struct Book {
-    int id;
-    string title;
-    string issuedTo;
-    string issueDate;
-    bool isIssued;
-};
-Book books[SIZE];
+int ids[SIZE];
+string titles[SIZE];
+string issuedTos[SIZE];
+string issueDates[SIZE];
+bool isIssueds[SIZE];
 int bookCount = 0;
+
 void addBook() {
     cout << "Enter Book ID: ";
-    cin >> books[bookCount].id;
+    cin >> ids[bookCount];
     cin.ignore();
     cout << "Enter Title: ";
-    getline(cin, books[bookCount].title);
-    books[bookCount].isIssued = false;
+    getline(cin, titles[bookCount]);
+    isIssueds[bookCount] = false;
     bookCount++;
     cout << "Book added.\n";
 }
+
 void issueBook() {
     int id;
     cout << "Enter Book ID to issue: ";
     cin >> id;
     cin.ignore();
     for (int i = 0; i < bookCount; i++) {
-        if (books[i].id == id && !books[i].isIssued) {
+        if (ids[i] == id && !isIssueds[i]) {
             cout << "Issued To: ";
-            getline(cin, books[i].issuedTo);
+            getline(cin, issuedTos[i]);
             cout << "Issue Date: ";
-            getline(cin, books[i].issueDate);
-            books[i].isIssued = true;
+            getline(cin, issueDates[i]);
+            isIssueds[i] = true;
             cout << "Book issued.\n";
             return;
         }
     }
     cout << "Book not found or already issued.\n";
 }
+
 void viewIssued() {
     cout << "\n--- Issued Books ---\n";
     bool found = false;
     for (int i = 0; i < bookCount; i++) {
-        if (books[i].isIssued) {
-            cout << "Book ID: " << books[i].id << "\n";
-            cout << "Title: " << books[i].title << "\n";
-            cout << "Issued To: " << books[i].issuedTo << "\n";
-            cout << "Issue Date: " << books[i].issueDate << "\n";
+        if (isIssueds[i]) {
+            cout << "Book ID: " << ids[i] << "\n";
+            cout << "Title: " << titles[i] << "\n";
+            cout << "Issued To: " << issuedTos[i] << "\n";
+            cout << "Issue Date: " << issueDates[i] << "\n";
             cout << "--------------------------\n";
             found = true;
         }
@@ -56,6 +57,7 @@ void viewIssued() {
         cout << "No books are currently issued.\n";
     }
 }
+
 int main() {
     int choice;
     do {
