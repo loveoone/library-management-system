@@ -1,17 +1,13 @@
 #include <iostream>
 using namespace std;
 
-// ------------------ Book Structure ------------------
-struct Book {
-    int id;
-    char title[50];
-    char author[50];
-    bool isIssued;
-};
+// ------------------ Global Arrays ------------------
 
-// ------------------ Global Book Array ------------------
 const int MAX_BOOKS = 100;
-Book books[MAX_BOOKS];
+int bookIDs[MAX_BOOKS];
+char bookTitles[MAX_BOOKS][50];
+char bookAuthors[MAX_BOOKS][50];
+bool bookIssued[MAX_BOOKS];
 int bookCount = 0;
 
 // ------------------ Functions ------------------
@@ -23,13 +19,13 @@ void addBook() {
     }
 
     cout << "Enter Book ID: ";
-    cin >> books[bookCount].id;
+    cin >> bookIDs[bookCount];
     cin.ignore();
     cout << "Enter Book Title: ";
-    cin.getline(books[bookCount].title, 50);
+    cin.getline(bookTitles[bookCount], 50);
     cout << "Enter Author Name: ";
-    cin.getline(books[bookCount].author, 50);
-    books[bookCount].isIssued = false;
+    cin.getline(bookAuthors[bookCount], 50);
+    bookIssued[bookCount] = false;
 
     bookCount++;
     cout << "✅ Book added successfully!\n";
@@ -43,8 +39,8 @@ void viewBooks() {
 
     cout << "\n--- Book List ---\n";
     for (int i = 0; i < bookCount; i++) {
-        cout << books[i].id << " | " << books[i].title << " | " << books[i].author;
-        cout << " | " << (books[i].isIssued ? "Issued" : "Available") << "\n";
+        cout << bookIDs[i] << " | " << bookTitles[i] << " | " << bookAuthors[i];
+        cout << " | " << (bookIssued[i] ? "Issued" : "Available") << "\n";
     }
 }
 
@@ -56,11 +52,11 @@ void modifyBook() {
 
     bool found = false;
     for (int i = 0; i < bookCount; i++) {
-        if (books[i].id == id) {
+        if (bookIDs[i] == id) {
             cout << "Enter new title: ";
-            cin.getline(books[i].title, 50);
+            cin.getline(bookTitles[i], 50);
             cout << "Enter new author: ";
-            cin.getline(books[i].author, 50);
+            cin.getline(bookAuthors[i], 50);
             found = true;
             cout << "✅ Book modified successfully!\n";
             break;
@@ -76,9 +72,12 @@ void deleteBook() {
 
     bool found = false;
     for (int i = 0; i < bookCount; i++) {
-        if (books[i].id == id) {
+        if (bookIDs[i] == id) {
             for (int j = i; j < bookCount - 1; j++) {
-                books[j] = books[j + 1];
+                bookIDs[j] = bookIDs[j + 1];
+                strcpy(bookTitles[j], bookTitles[j + 1]);
+                strcpy(bookAuthors[j], bookAuthors[j + 1]);
+                bookIssued[j] = bookIssued[j + 1];
             }
             bookCount--;
             found = true;
