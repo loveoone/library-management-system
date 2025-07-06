@@ -54,7 +54,7 @@ void printSavedBooks() {
 }
 
 void printSavedUsers() {
-    cout << "\n👤 Simulated Saved User Data:\n";
+    cout << "\n Simulated Saved User Data:\n";
     for (int i = 0; i < userCount; i++) {
         cout << userIDs[i] << " | " << userNames[i] << " | " << userRoles[i] << "\n";
     }
