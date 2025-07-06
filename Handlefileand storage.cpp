@@ -7,15 +7,15 @@ const int MAX_USERS = 100;
 
 // ------------------ Book Data ------------------
 int bookIDs[MAX_BOOKS];
-const char* bookTitles[MAX_BOOKS];
-const char* bookAuthors[MAX_BOOKS];
+const char bookTitles[MAX_BOOKS];
+const char bookAuthors[MAX_BOOKS];
 bool bookIssued[MAX_BOOKS];
 int bookCount = 0;
 
 // ------------------ User Data ------------------
 int userIDs[MAX_USERS];
-const char* userNames[MAX_USERS];
-const char* userRoles[MAX_USERS];
+const char userNames[MAX_USERS];
+const char userRoles[MAX_USERS];
 int userCount = 0;
 
 // ------------------ Simulated File Functions ------------------
