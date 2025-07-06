@@ -7,27 +7,27 @@ const int MAX_USERS = 100;
 
 // ------------------ Book Data ------------------
 int bookIDs[MAX_BOOKS];
-const char bookTitles[MAX_BOOKS];
-const char bookAuthors[MAX_BOOKS];
+const char* bookTitles[MAX_BOOKS];
+const char* bookAuthors[MAX_BOOKS];
 bool bookIssued[MAX_BOOKS];
 int bookCount = 0;
 
 // ------------------ User Data ------------------
 int userIDs[MAX_USERS];
-const char userNames[MAX_USERS];
-const char userRoles[MAX_USERS];
+const char* userNames[MAX_USERS];
+const char* userRoles[MAX_USERS];
 int userCount = 0;
 
 // ------------------ Simulated File Functions ------------------
 void simulateBookData() {
     bookIDs[0] = 101;
-    bookTitles[0] = "C++ Primer";
-    bookAuthors[0] = " ኦሾ";
+    bookTitles[0] = "ኦሮማይ";
+    bookAuthors[0] = "በአሉ ግርማ";
     bookIssued[0] = false;
 
     bookIDs[1] = 102;
-    bookTitles[1] = "Algorithms";
-    bookAuthors[1] = "CLRS";
+    bookTitles[1] = "ፍቅር እስከ መቃብር";
+    bookAuthors[1] = "ሀዲስ አለማየሁ";
     bookIssued[1] = true;
 
     bookCount = 2;
