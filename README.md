@@ -20,8 +20,19 @@ output
 2: Issue a book
 3: View all issued books
 0: Exit the program
-
- System: Report Requirements
+Book Return System 
+ It allows users to view and return borrowed books using a menu-driven interface.
+Features
+- Display a list of currently borrowed books
+- Return a selected book
+- Prevents returning a book more than once
+- Simple and interactive command-line menu
+* How It Works
+The system keeps track of 5 pre-defined borrowed books stored in an array. Users can:
+1. View the list of books they have borrowed.
+2. Choose a book to return by its number.
+3. Exit the system when done.
+System: Report Requirements
 A library management system typically tracks:
 -Books: Title, author, ISBN, availability, etc.
 -Members: Member ID, name, contact details, borrowed books.
@@ -31,12 +42,7 @@ A library management system typically tracks:
 -Borrowed Books Report: Show currently borrowed books and their due dates.
 -Overdue Books Report: Highlight books past their due date with fines.
 -Member Report: List members and their borrowing history.
-
-
----
-
- System Integration 
-
+System Integration 
 This acts as the **central integration point** for the entire Library Management System. It connects all functional parts into one unified                                 How to Run
 
 ```bash
