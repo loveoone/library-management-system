@@ -12,37 +12,9 @@ A library management system typically tracks:
 
 ---
 
-### 📦 System Integration Module
+ System Integration 
 
-**👨‍💻 Author:** *Eliyas Tegegn (Elias)*
-</br>
-**📌 Role:** *System Integration*
-</br>
-**📁 File:** `main_integration.cpp`
-</br>
-#### 🔧 Summary
-
-This module acts as the **central integration point** for the entire Library Management System. It connects all functional parts into one unified command-line application.
-
-#### ✅ Integrated Features
-
-| Feature           | Status     | Implemented By |
-| ----------------- | ---------- | -------------- |
-| Book Management   | ✅ Complete | Afomiya        |
-| Book Return       | ✅ Complete | Nahom          |
-| Report Generation | ✅ Complete | Samuel         |
-
-#### 🚧 Pending Features (Placeholders Ready)
-
-| Feature                 | Status     | Assigned To |
-| ----------------------- | ---------- | ----------- |
-| User Management         | 🚧 Pending | Afomiya     |
-| Book Issuing            | 🚧 Pending | Biruk       |
-| File Handling & Storage | 🚧 Pending | Tewodrose   |
-| Backup & Recovery       | 🚧 Pending | Harun       |
-| Search & File System    | 🚧 Pending | Huzeyfa     |
-
-#### 🛠️ How to Run
+This acts as the **central integration point** for the entire Library Management System. It connects all functional parts into one unified                                 How to Run
 
 ```bash
 g++ main_integration.cpp -o library_system
@@ -69,15 +41,12 @@ Running Image 5
 </br>
 ![image](https://github.com/user-attachments/assets/a3dde6bb-c06f-473b-8e9f-5f009e22ce4d)
 </br>
-#### 📄 Output Files
+Output Files
 </br>
 
 * `borrowed_books.txt` – Text format report
 * `borrowed_books.csv` – CSV format report
-
-#### 🔗 Notes
+ Notes
 
 * The `mainMenu()` function is the main entry point for running the entire system.
-* All modules are designed for future extension and easy replacement of stubs with actual logic.
-
----
+* All modules are designed for future extension and easy replacement of stubs with actual logic
