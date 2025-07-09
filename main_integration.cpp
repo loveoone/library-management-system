@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-// ================== GLOBAL DATA ==================
+// ================== GLOBAL DATA =================
 const int MAX_BOOKS = 100;
 int bookIds[MAX_BOOKS];
 char bookTitles[MAX_BOOKS][50];
