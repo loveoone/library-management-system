@@ -51,33 +51,8 @@ This acts as the **central integration point** for the entire Library Management
 g++ main_integration.cpp -o library_system
 ./library_system
 ```
-#### Integrated Features Working 
-Running Image 1
-</br>
-![image](https://github.com/user-attachments/assets/0191cf18-4e86-44ac-ac56-66d785765076)
-</br>
-Running Image 2
-</br>
-![image](https://github.com/user-attachments/assets/33e87f56-47ee-4d55-b3fc-a14904d137ae)
-</br>
-Running Image 3
-</br>
-![image](https://github.com/user-attachments/assets/35e52382-fcdf-420f-9424-5fad01a27e19)
-</br>
-Running Image 4
-</br>
-![image](https://github.com/user-attachments/assets/707c2c14-9ddd-403a-87a5-89eff8871656)
-</br>
-Running Image 5
-</br>
-![image](https://github.com/user-attachments/assets/a3dde6bb-c06f-473b-8e9f-5f009e22ce4d)
-</br>
-Output Files
-</br>
+ Integrated Features Working 
 
-* `borrowed_books.txt` – Text format report
-* `borrowed_books.csv` – CSV format report
- Notes
 
 * The `mainMenu()` function is the main entry point for running the entire system.
 * All modules are designed for future extension and easy replacement of stubs with actual logic
