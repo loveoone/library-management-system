@@ -6,22 +6,28 @@ const int MAX_BOOKS = 100;
 const int MAX_NAME_LEN = 50;
 const int MAX_TITLE_LEN = 100;
 
-struct User {
-    int id;
-    char name[MAX_NAME_LEN];
-};
-
-struct Book {
-    int id;
-    char title[MAX_TITLE_LEN];
-    bool isIssued;
-    int issuedToUserId;
-};
-
-User users[MAX_USERS];
-Book books[MAX_BOOKS];
+int userIds[MAX_USERS];
+char userNames[MAX_USERS][MAX_NAME_LEN];
 int userCount = 0;
+
+int bookIds[MAX_BOOKS];
+char bookTitles[MAX_BOOKS][MAX_TITLE_LEN];
+bool bookIsIssued[MAX_BOOKS];
+int issuedToUserId[MAX_BOOKS];
 int bookCount = 0;
+
+// Function to read a line into char array
+void readLine(char arr[], int length) {
+    cin.ignore(); // clear previous newline
+    for (int i = 0; i < length; i++) {
+        char c = cin.get();
+        if (c == '\n') {
+            arr[i] = '\0';
+            break;
+        }
+        arr[i] = c;
+    }
+}
 
 // Add user
 void addUser() {
@@ -31,10 +37,10 @@ void addUser() {
     }
 
     cout << "Enter user ID: ";
-    cin >> users[userCount].id;
-    cin.ignore(); // remove newline
+    cin >> userIds[userCount];
+
     cout << "Enter user name: ";
-    cin.getline(users[userCount].name, MAX_NAME_LEN);
+    readLine(userNames[userCount], MAX_NAME_LEN);
 
     userCount++;
     cout << "User added successfully!\n";
@@ -48,13 +54,13 @@ void addBook() {
     }
 
     cout << "Enter book ID: ";
-    cin >> books[bookCount].id;
-    cin.ignore();
-    cout << "Enter book title: ";
-    cin.getline(books[bookCount].title, MAX_TITLE_LEN);
+    cin >> bookIds[bookCount];
 
-    books[bookCount].isIssued = false;
-    books[bookCount].issuedToUserId = -1;
+    cout << "Enter book title: ";
+    readLine(bookTitles[bookCount], MAX_TITLE_LEN);
+
+    bookIsIssued[bookCount] = false;
+    issuedToUserId[bookCount] = -1;
     bookCount++;
     cout << "Book added successfully!\n";
 }
@@ -67,10 +73,9 @@ void issueBook() {
     cout << "Enter user ID to issue to: ";
     cin >> userId;
 
-    // Find book
     int bookIndex = -1;
     for (int i = 0; i < bookCount; i++) {
-        if (books[i].id == bookId) {
+        if (bookIds[i] == bookId) {
             bookIndex = i;
             break;
         }
@@ -81,15 +86,14 @@ void issueBook() {
         return;
     }
 
-    if (books[bookIndex].isIssued) {
+    if (bookIsIssued[bookIndex]) {
         cout << "Book already issued!\n";
         return;
     }
 
-    // Find user
     int userIndex = -1;
     for (int i = 0; i < userCount; i++) {
-        if (users[i].id == userId) {
+        if (userIds[i] == userId) {
             userIndex = i;
             break;
         }
@@ -100,20 +104,21 @@ void issueBook() {
         return;
     }
 
-    books[bookIndex].isIssued = true;
-    books[bookIndex].issuedToUserId = userId;
-    cout << "Book issued to " << users[userIndex].name << "!\n";
+    bookIsIssued[bookIndex] = true;
+    issuedToUserId[bookIndex] = userId;
+
+    cout << "Book issued to " << userNames[userIndex] << "!\n";
 }
 
 // View issued books
 void viewIssuedBooks() {
     bool found = false;
     for (int i = 0; i < bookCount; i++) {
-        if (books[i].isIssued) {
+        if (bookIsIssued[i]) {
             found = true;
-            cout << "Book ID: " << books[i].id 
-                 << ", Title: " << books[i].title 
-                 << ", Issued to User ID: " << books[i].issuedToUserId << "\n";
+            cout << "Book ID: " << bookIds[i]
+                 << ", Title: " << bookTitles[i]
+                 << ", Issued to User ID: " << issuedToUserId[i] << "\n";
         }
     }
 
@@ -147,3 +152,7 @@ int main() {
 
     return 0;
 }
+
+
+    
+   
