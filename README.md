@@ -1,4 +1,27 @@
-library management system review This project works library management system using c++ programming languages using statement,function,array,string. It does 1.Add, update, delete books 2. Register and manage users (students or staff) 3. Issue and return books 4. Search for books (by title, author, ID) 5. Generate reports (borrowed books, overdue books, etc.) 6. Store data using files This module handles all operations related to managing books in the Library Management System. It allows users (librarians/admins) to add, view, update, and delete books from the system. All data is stored persistently using text files (books.txt), enabling data recovery and long-term use.Library Management System: Report Requirements
+library management system review This project works library management system using c++ programming languages using statement,function,array,string. It does 1.Add, update, delete books 2. Register and manage users (students or staff) 3. Issue and return books 4. Search for books (by title, author, ID) 5. Generate reports (borrowed books, overdue books, etc.)  This module handles all operations related to managing books in the Library Management System. It allows users (librarians/admins) to add, view, update, and delete books from the system. All data is stored persistently using text files (books.txt), enabling data recovery and long-term use.Library Management
+Book Issuing System
+A simple C++ console-based Book Issuing System that allows you to 
+add books
+issue them to users
+and view issued books
+This version is beginner-friendly and 
+does not use file storage
+date/time libraries
+1. Copy the .cpp code into any C++ IDE or compiler.
+2. Compile and run the program.
+3. Use the menu
+Features
+- Add a new book to the system
+- Issue a book by entering user name and issue date
+- View all currently issued books
+- uses of functions
+output
+1: Add a new book
+2: Issue a book
+3: View all issued books
+0: Exit the program
+
+ System: Report Requirements
 A library management system typically tracks:
 -Books: Title, author, ISBN, availability, etc.
 -Members: Member ID, name, contact details, borrowed books.
