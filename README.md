@@ -34,6 +34,40 @@ The system keeps track of 5 pre-defined borrowed books stored in an array. Users
 1. View the list of books they have borrowed.
 2. Choose a book to return by its number.
 3. Exit the system when done.
+Here's a simple and clear README for your C++ Library Simulation System 
+It simulates loading and displaying book and user data for a library management system. It does not use real file I/O—instead, it uses hardcoded (simulated) data to represent saved information.
+Features
+Stores and displays information about books and users.
+Simulates file loading by hardcoding sample data.
+Outputs:
+Book ID, Title, Author, and Availability
+User ID, Name, and Role
+Data Structure
+Book Info:
+bookIDs[] – Stores book ID numbers
+bookTitles[] – Book titles (Amharic-supported)
+bookAuthors[] – Author names
+bookIssued[] – true if the book is issued User Info:
+userIDs[] – Stores user ID numbers
+userNames[] – Names of users
+userRoles[] – Role (e.g., student or staff)
+How It Works
+1. The program starts by calling:
+simulateBookData() to load sample books
+simulateUserData() to load sample users.    2. Displays confirmation message.
+3. Prints all loaded book and user data to the console.
+Sample Output
+Simulated File Load Complete.
+ Simulated Saved Book Data:
+101 | ኦሮማይ | በአሉ ግርማ | Available
+102 | ፍቅር እስከ መቃብር | ሀዲስ አለማየሁ | Issued
+Simulated File Load Complete.
+Simulated Saved Book Data:
+101 | ኦሮማይ | በአሉ ግርማ | Available
+102 | ፍቅር እስከ መቃብር | ሀዲስ አለማየሁ | Issued
+Simulated Saved User Data:
+201 | Tedi | student
+202 | Mr.Dagmawi | staff
 System: Report Requirements
 A library management system typically tracks:
 -Books: Title, author, ISBN, availability, etc.
