@@ -1,6 +1,5 @@
 #include <iostream>
-#include <string>  
-// kept as you requested
+#include <string>  // kept as you requested
 using namespace std;
 
 // ------------------ Constants ------------------
@@ -126,7 +125,8 @@ void modifyBook() {
         }
     }
     if (!found) cout << "❌ Book not found.\n";
-}void deleteBook() {
+}
+void deleteBook() {
     int id;
     cout << "Enter Book ID to delete: ";
     cin >> id;
@@ -275,7 +275,8 @@ void fileSearch() {
         }
     }
     if (!found) cout << "File not found.\n";
-}                                             // ------------- Main Menu
+}
+// ------------------ Main Menu ------------------
 void mainMenu() {
     int choice;
     do {
@@ -323,5 +324,5 @@ void mainMenu() {
 // ------------------ Main ------------------
 int main() {
     mainMenu();
-    return ;
+    return 0;
 }
