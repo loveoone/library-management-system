@@ -1,62 +1,45 @@
 #include <iostream>
-#include <vector>
-#include <string>
-#include <fstream>
-#include <iomanip>
-#include <ctime>
 using namespace std;
 
-// ================== STRUCT DEFINITIONS ==================
-struct Book {
-    string isbn;
-    string title;
-    string author;
-};
-
-struct Member {
-    int memberId;
-    string name;
-};
-
-struct Transaction {
-    string isbn;
-    int memberId;
-    string borrowDate;
-    string dueDate;
-};
-
 // ================== GLOBAL DATA ==================
-vector<Book> books = {
-    {"123456", "The Great Gatsby", "F. Scott Fitzgerald"},
-    {"789012", "1984", "George Orwell"},
-    {"345678", "Pride and Prejudice", "Jane Austen"}
-};
+const int MAX_BOOKS = 100;
+int bookIds[MAX_BOOKS];
+char bookTitles[MAX_BOOKS][50];
+char bookAuthors[MAX_BOOKS][50];
+bool bookIssued[MAX_BOOKS];
+int bookCount = 0;
 
-vector<Member> members = {
-    {1, "Alice Smith"},
-    {2, "Bob Johnson"}
-};
+const int MAX_MEMBERS = 10;
+int memberIds[MAX_MEMBERS] = {1, 2};
+char memberNames[MAX_MEMBERS][50] = {"Alice Smith", "Bob Johnson"};
 
-vector<Transaction> transactions = {
-    {"123456", 1, "2025-06-01", "2025-06-15"},
-    {"789012", 2, "2025-06-10", "2025-06-24"},
-    {"345678", 1, "2025-06-20", "2025-07-05"}
-};
+const int MAX_TRANSACTIONS = 100;
+char transISBN[MAX_TRANSACTIONS][10];
+int transMemberId[MAX_TRANSACTIONS];
+char transBorrowDate[MAX_TRANSACTIONS][11];
+char transDueDate[MAX_TRANSACTIONS][11];
+int transactionCount = 3;
 
-// ================== IMPLEMENTED MODULES ==================
+// Preloaded transactions
+void loadSampleTransactions() {
+    strcpy(transISBN[0], "123456");
+    transMemberId[0] = 1;
+    strcpy(transBorrowDate[0], "2025-06-01");
+    strcpy(transDueDate[0], "2025-06-15");
 
-// ✅ Book Management - Afomiya
+    strcpy(transISBN[1], "789012");
+    transMemberId[1] = 2;
+    strcpy(transBorrowDate[1], "2025-06-10");
+    strcpy(transDueDate[1], "2025-06-24");
+
+    strcpy(transISBN[2], "345678");
+    transMemberId[2] = 1;
+    strcpy(transBorrowDate[2], "2025-06-20");
+    strcpy(transDueDate[2], "2025-07-05");
+}
+
+// ================== BOOK MANAGEMENT ==================
 void bookMenu() {
-    struct BookLocal {
-        int id;
-        char title[50];
-        char author[50];
-        bool isIssued;
-    };
-    const int MAX_BOOKS = 100;
-    static BookLocal booksLocal[MAX_BOOKS];
-    static int bookCount = 0;
-
     int choice;
     do {
         cout << "\nBook Management Menu\n";
@@ -71,30 +54,26 @@ void bookMenu() {
 
         if (choice == 1) {
             if (bookCount >= MAX_BOOKS) {
-                cout << "Library is full.\n";
+                cout << "Library full.\n";
                 continue;
             }
             cout << "Enter Book ID: ";
-            cin >> booksLocal[bookCount].id;
+            cin >> bookIds[bookCount];
             cin.ignore();
-            cout << "Enter Book Title: ";
-            cin.getline(booksLocal[bookCount].title, 50);
-            cout << "Enter Author Name: ";
-            cin.getline(booksLocal[bookCount].author, 50);
-            booksLocal[bookCount].isIssued = false;
+            cout << "Enter Title: ";
+            cin.getline(bookTitles[bookCount], 50);
+            cout << "Enter Author: ";
+            cin.getline(bookAuthors[bookCount], 50);
+            bookIssued[bookCount] = false;
             bookCount++;
-            cout << "Book added successfully.\n";
+            cout << "Book added.\n";
         }
         else if (choice == 2) {
-            if (bookCount == 0) {
-                cout << "No books available.\n";
-            } else {
-                for (int i = 0; i < bookCount; i++) {
-                    cout << booksLocal[i].id << " | "
-                         << booksLocal[i].title << " | "
-                         << booksLocal[i].author << " | "
-                         << (booksLocal[i].isIssued ? "Issued" : "Available") << endl;
-                }
+            for (int i = 0; i < bookCount; i++) {
+                cout << bookIds[i] << " | "
+                     << bookTitles[i] << " | "
+                     << bookAuthors[i] << " | "
+                     << (bookIssued[i] ? "Issued" : "Available") << endl;
             }
         }
         else if (choice == 3) {
@@ -104,12 +83,12 @@ void bookMenu() {
             cin.ignore();
             bool found = false;
             for (int i = 0; i < bookCount; i++) {
-                if (booksLocal[i].id == id) {
+                if (bookIds[i] == id) {
                     cout << "Enter new title: ";
-                    cin.getline(booksLocal[i].title, 50);
+                    cin.getline(bookTitles[i], 50);
                     cout << "Enter new author: ";
-                    cin.getline(booksLocal[i].author, 50);
-                    cout << "Book modified successfully.\n";
+                    cin.getline(bookAuthors[i], 50);
+                    cout << "Book updated.\n";
                     found = true;
                     break;
                 }
@@ -122,12 +101,15 @@ void bookMenu() {
             cin >> id;
             bool found = false;
             for (int i = 0; i < bookCount; i++) {
-                if (booksLocal[i].id == id) {
+                if (bookIds[i] == id) {
                     for (int j = i; j < bookCount - 1; j++) {
-                        booksLocal[j] = booksLocal[j + 1];
+                        bookIds[j] = bookIds[j + 1];
+                        strcpy(bookTitles[j], bookTitles[j + 1]);
+                        strcpy(bookAuthors[j], bookAuthors[j + 1]);
+                        bookIssued[j] = bookIssued[j + 1];
                     }
                     bookCount--;
-                    cout << "Book deleted successfully.\n";
+                    cout << "Book deleted.\n";
                     found = true;
                     break;
                 }
@@ -137,154 +119,35 @@ void bookMenu() {
     } while (choice != 0);
 }
 
-// ✅ Book Return - Nahom
+// ================== RETURN BOOK ==================
 void returnBook() {
-    string bookId;
+    char isbn[10];
     cout << "Enter Book ISBN to return: ";
-    cin >> bookId;
+    cin >> isbn;
 
     bool found = false;
-    for (auto& t : transactions) {
-        if (t.isbn == bookId) {
+    for (int i = 0; i < transactionCount; i++) {
+        if (strcmp(transISBN[i], isbn) == 0) {
+            cout << "Book with ISBN " << isbn << " returned.\n";
             found = true;
-            cout << "Book with ISBN " << bookId << " returned successfully.\n";
             break;
         }
     }
     if (!found) {
-        cout << "Book with ISBN " << bookId << " not found in transaction records.\n";
+        cout << "Book not found in transactions.\n";
     }
 }
 
-// ✅ Report Generation - Samuel
-string getCurrentDate() {
-    time_t now = time(nullptr);
-    struct tm* t = localtime(&now);
-    char buffer[11];
-    strftime(buffer, sizeof(buffer), "%Y-%m-%d", t);
-    return string(buffer);
-}
-
-void generateBorrowedBooksTextReport(
-    const vector<Transaction>& transactions,
-    const vector<Book>& books,
-    const vector<Member>& members,
-    const string& filename
-) {
-    ofstream outFile(filename);
-    if (!outFile.is_open()) {
-        cerr << "Could not open file " << filename << endl;
-        return;
+// ================== REPORT (Simple Display) ==================
+void generateReport() {
+    cout << "\nBorrowed Books Report\n";
+    cout << "ISBN\tMember ID\tBorrow Date\tDue Date\n";
+    for (int i = 0; i < transactionCount; i++) {
+        cout << transISBN[i] << "\t"
+             << transMemberId[i] << "\t\t"
+             << transBorrowDate[i] << "\t"
+             << transDueDate[i] << endl;
     }
-
-    outFile << left << setw(15) << "ISBN"
-            << setw(30) << "Book Title"
-            << setw(20) << "Member Name"
-            << setw(15) << "Borrow Date"
-            << setw(15) << "Due Date"
-            << setw(10) << "Status" << endl;
-    outFile << string(105, '-') << endl;
-
-    string currentDate = getCurrentDate();
-    for (const auto& transaction : transactions) {
-        string bookTitle = "Unknown";
-        string memberName = "Unknown";
-
-        for (const auto& book : books) {
-            if (book.isbn == transaction.isbn) {
-                bookTitle = book.title;
-                break;
-            }
-        }
-        for (const auto& member : members) {
-            if (member.memberId == transaction.memberId) {
-                memberName = member.name;
-                break;
-            }
-        }
-
-        string status = (transaction.dueDate < currentDate) ? "Overdue" : "On Time";
-
-        outFile << left << setw(15) << transaction.isbn
-                << setw(30) << bookTitle
-                << setw(20) << memberName
-                << setw(15) << transaction.borrowDate
-                << setw(15) << transaction.dueDate
-                << setw(10) << status << endl;
-    }
-
-    outFile.close();
-    cout << "Text report generated: " << filename << endl;
-}
-
-void generateBorrowedBooksCSVReport(
-    const vector<Transaction>& transactions,
-    const vector<Book>& books,
-    const vector<Member>& members,
-    const string& filename
-) {
-    ofstream outFile(filename);
-    if (!outFile.is_open()) {
-        cerr << "Could not open file " << filename << endl;
-        return;
-    }
-
-    outFile << "ISBN,Book Title,Member Name,Borrow Date,Due Date,Status\n";
-
-    string currentDate = getCurrentDate();
-    for (const auto& transaction : transactions) {
-        string bookTitle = "Unknown";
-        string memberName = "Unknown";
-
-        for (const auto& book : books) {
-            if (book.isbn == transaction.isbn) {
-                bookTitle = book.title;
-                break;
-            }
-        }
-        for (const auto& member : members) {
-            if (member.memberId == transaction.memberId) {
-                memberName = member.name;
-                break;
-            }
-        }
-
-        string status = (transaction.dueDate < currentDate) ? "Overdue" : "On Time";
-
-        outFile << transaction.isbn << "," << bookTitle << "," << memberName << ","
-                << transaction.borrowDate << "," << transaction.dueDate << ","
-                << status << "\n";
-    }
-
-    outFile.close();
-    cout << "CSV report generated: " << filename << endl;
-}
-
-// ================== PLACEHOLDER FUNCTIONS ==================
-
-// 🚧 User Management - Afomiya
-void manageUsers() {
-    cout << "[User Management] Module not implemented yet.\n";
-}
-
-// 🚧 Book Issuing - Biruk
-void issueBook() {
-    cout << "[Book Issuing] Module not implemented yet.\n";
-}
-
-// 🚧 File Handling - Tewodrose
-void handleFiles() {
-    cout << "[File Handling] Module not implemented yet.\n";
-}
-
-// 🚧 Backup & Recovery - Harun
-void backupSystem() {
-    cout << "[Backup & Recovery] Module not implemented yet.\n";
-}
-
-// 🚧 Search System - Huzeyfa
-void searchBooks() {
-    cout << "[Search System] Module not implemented yet.\n";
 }
 
 // ================== MAIN MENU ==================
@@ -293,37 +156,25 @@ void mainMenu() {
     do {
         cout << "\nLibrary Management System\n";
         cout << "1. Book Management\n";
-        cout << "2. User Management\n";
-        cout << "3. Issue Book\n";
-        cout << "4. Return Book\n";
-        cout << "5. File Handling\n";
-        cout << "6. Backup & Recovery\n";
-        cout << "7. Search Book\n";
-        cout << "8. Generate Reports\n";
+        cout << "2. Return Book\n";
+        cout << "3. View Report\n";
         cout << "0. Exit\n";
         cout << "Enter choice: ";
         cin >> choice;
 
         switch (choice) {
             case 1: bookMenu(); break;
-            case 2: manageUsers(); break;
-            case 3: issueBook(); break;
-            case 4: returnBook(); break;
-            case 5: handleFiles(); break;
-            case 6: backupSystem(); break;
-            case 7: searchBooks(); break;
-            case 8:
-                generateBorrowedBooksTextReport(transactions, books, members, "borrowed_books.txt");
-                generateBorrowedBooksCSVReport(transactions, books, members, "borrowed_books.csv");
-                break;
-            case 0: cout << "Exiting...\n"; break;
-            default: cout << "Invalid choice.\n";
+            case 2: returnBook(); break;
+            case 3: generateReport(); break;
+            case 0: cout << "Goodbye!\n"; break;
+            default: cout << "Invalid.\n";
         }
     } while (choice != 0);
 }
 
 // ================== MAIN ==================
 int main() {
+    loadSampleTransactions();
     mainMenu();
     return 0;
 }
