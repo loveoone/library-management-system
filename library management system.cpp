@@ -1,41 +1,20 @@
 #include <iostream>
+#include <string>
 using namespace std;
 
 const int SIZE = 100;
 
 int ids[SIZE];
-char titles[SIZE][100];
-char issuedTos[SIZE][100];
-char issueDates[SIZE][20];
+string titles[SIZE];
+string issuedTos[SIZE];
+string issueDates[SIZE];
 bool isIssueds[SIZE];
 int bookCount = 0;
 
-// Manual string copy
-void copy(char dest[], const char src[]) {
-    int i = 0;
-    while (src[i] != '\0') {
-        dest[i] = src[i];
-        i++;
-    }
-    dest[i] = '\0';
-}
-
-// Manual string compare (returns true if equal)
-bool equal(const char a[], const char b[]) {
-    int i = 0;
-    while (a[i] != '\0' && b[i] != '\0') {
-        if (a[i] != b[i]) return false;
-        i++;
-    }
-    return a[i] == b[i];
-}
-
-// Add a new book
 void addBook() {
     cout << "Enter Book ID: ";
-    int newID;
+    int newID; 
     cin >> newID;
-
     // Check for duplicate ID
     for (int i = 0; i < bookCount; i++) {
         if (ids[i] == newID) {
@@ -43,27 +22,23 @@ void addBook() {
             return;
         }
     }
-
     ids[bookCount] = newID;
-    cin.ignore();  // clear newline
+    cin.ignore();  // Clear newline
+
     cout << "Enter Title: ";
-    cin.getline(titles[bookCount], 100);
-
+    getline(cin, titles[bookCount]);
     isIssueds[bookCount] = false;
-    issuedTos[bookCount][0] = '\0';
-    issueDates[bookCount][0] = '\0';
+    issuedTos[bookCount] = "";
+    issueDates[bookCount] = "";
     bookCount++;
-
     cout << "Book added.\n";
 }
 
-// Issue a book to a user
 void issueBook() {
     if (bookCount == 0) {
         cout << "No books available to issue.\n";
         return;
     }
-
     int id;
     cout << "Enter Book ID to issue: ";
     cin >> id;
@@ -75,15 +50,9 @@ void issueBook() {
             found = true;
             if (!isIssueds[i]) {
                 cout << "Issued To: ";
-                char borrower[100];
-                cin.getline(borrower, 100);
-                copy(issuedTos[i], borrower);
-
+                getline(cin, issuedTos[i]);
                 cout << "Issue Date: ";
-                char date[20];
-                cin.getline(date, 20);
-                copy(issueDates[i], date);
-
+                getline(cin, issueDates[i]);
                 isIssueds[i] = true;
                 cout << "Book issued.\n";
                 return;
@@ -96,13 +65,11 @@ void issueBook() {
     if (!found) cout << "Book not found.\n";
 }
 
-// Return a book
 void returnBook() {
     if (bookCount == 0) {
         cout << "No books in library.\n";
         return;
     }
-
     int id;
     cout << "Enter Book ID to return: ";
     cin >> id;
@@ -114,8 +81,8 @@ void returnBook() {
             found = true;
             if (isIssueds[i]) {
                 isIssueds[i] = false;
-                issuedTos[i][0] = '\0';
-                issueDates[i][0] = '\0';
+                issuedTos[i] = "";
+                issueDates[i] = "";
                 cout << "Book returned successfully.\n";
                 return;
             } else {
@@ -127,7 +94,6 @@ void returnBook() {
     if (!found) cout << "Book not found.\n";
 }
 
-// View issued books
 void viewIssued() {
     cout << "\n--- Issued Books ---\n";
     bool found = false;
@@ -146,7 +112,6 @@ void viewIssued() {
     }
 }
 
-// Main menu
 int main() {
     int choice;
     do {
@@ -166,3 +131,4 @@ int main() {
 
     return 0;
 }
+mestakakle nager kalwe eywte este
