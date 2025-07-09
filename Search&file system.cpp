@@ -1,38 +1,46 @@
 #include <iostream>
 #include <string>
 
-namespace fs = std::filesystem;
-
-void searchFile(const fs::path& directory, const std::string& filename) {
-    try {
-        for (const auto& entry : fs::recursive_directory_iterator(directory)) {
-            if (entry.is_regular_file() && entry.path().filename() == filename) {
-                std::cout << "Found: " << entry.path() << std::endl;
-            }
-        }
-    } catch (const fs::filesystem_error& e) {
-        std::cerr << "Filesystem error: " << e.what() << std::endl;
-    } catch (const std::exception& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
-    }
-}
+using namespace std;
 
 int main() {
-    std::string directoryPath;
-    std::string filename;
+    const int MAX_FILES = 100;
+    string files[MAX_FILES];
+    int fileCount;
 
-    std::cout << "Enter the directory path to search: ";
-    std::getline(std::cin, directoryPath);
-    std::cout << "Enter the filename to search for: ";
-    std::getline(std::cin, filename);
+    cout << "Enter number of files to scan: ";
+    cin >> fileCount;
+    cin.ignore(); // Clear newline from input buffer
 
-    fs::path dirPath(directoryPath);
+    if (fileCount > MAX_FILES) fileCount = MAX_FILES;
 
-    if (fs::exists(dirPath) && fs::is_directory(dirPath)) {
-        searchFile(dirPath, filename);
-    } else {
-        std::cerr << "The provided path is not a valid directory." << std::endl;
-    }
+    // Input file paths
+    for (int i = 0; i < fileCount; ++i) {
+        cout << "Enter file path #" << (i + 1) << ": ";
+        getline(cin, files[i]);
+    }
 
-    return 0;
+    // Input filename to search for
+    string target;
+    cout << "Enter filename to search for: ";
+    getline(cin, target);
+
+    // Search for filename in the paths
+    bool found = false;
+    for (int i = 0; i < fileCount; ++i) {
+        string path = files[i];
+        size_t pos = path.find_last_of("/\\");
+        string name = (pos == string::npos) ? path : path.substr(pos + 1);
+
+        if (name == target) {
+            cout << "Found: " << path << endl;
+            found = true;
+        }
+    }
+
+    if (!found) {
+        cout << "File not found." << endl;
+    }
+
+    return 0;
 }
